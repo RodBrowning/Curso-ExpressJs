@@ -2,6 +2,7 @@ const turbo = require('turbo360')({site_id: process.env.TURBO_APP_ID})
 const vertex = require('vertex360')({site_id: process.env.TURBO_APP_ID})
 const router = vertex.router()
 const path = require('path')
+const fs = require('fs')
 
 var multer  = require('multer')
 
@@ -94,10 +95,20 @@ upload(req, res, (err)=>{
 	})
 })
 
+
+const remFile = (profi)=>{
+	var imgPath = 'public'+profi.image
+	try{
+		fs.unlinkSync(imgPath)
+	}catch(err){console.log(err)}
+}
+
+
 router.get('/reset/app', (req, res)=>{
 			var keysArray = Object.keys(profiles)
 			if(keysArray.length>3){				
 				for(let i = 3; i<keysArray.length; i++){
+					remFile(profiles[keysArray[i]])
 					delete profiles[keysArray[i]]
 				}
 			}
