@@ -94,6 +94,14 @@ upload(req, res, (err)=>{
 	})
 })
 
-
+router.get('/reset/app', (req, res)=>{
+			var keysArray = Object.keys(profiles)
+			if(keysArray.length>3){				
+				for(let i = 3; i<keysArray.length; i++){
+					delete profiles[keysArray[i]]
+				}
+			}
+			res.redirect('/')
+})
 
 module.exports = router
